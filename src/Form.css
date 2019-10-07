@@ -1,0 +1,77 @@
+form {
+  font-size: 16px;
+  padding: 20px;
+  color: white;
+}
+
+optgroup {
+  font-size: 16px;
+}
+
+label {
+  display: block;
+}
+
+input, textarea {
+  display: block;
+  font-size: 16px;
+  width: 80%;
+  padding: 5px;
+  margin: 6px 0 20px 0;
+}
+
+input:focus {
+  border: 3px solid #555;
+}
+
+textarea {
+  height: 150px;
+  resize: none;
+  padding: 10px;
+  text-align: left;
+}
+
+
+button.form__submit, button.form__cancel {
+  margin: 10px 20px 20px 0;
+  padding: 4px 8px;
+  font-size: 20px;
+}
+
+legend {
+  display: none;
+  border: none;
+}
+
+fieldset {
+  border: none;
+}
+
+.form__button__group {
+  padding-top: 20px;
+}
+
+.form__submit:not([disabled]):hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+.form__cancel:hover {
+  background-color: indianred;
+  color: white;
+}
+
+
+button.form__submit:disabled {
+  background-color: #00000;
+  color: #464C45;
+}
+
+.error {
+  color: pink;
+}
+
+.errorMessage {
+  color: crimson;
+  font-size: 22px;
+}
