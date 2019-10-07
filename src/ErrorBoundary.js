@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ErrorBoundary.css';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <h2>Sorry -- this page is temporarily unavailable</h2>
+        <p className='error-boundary'>Sorry -- this page is temporarily unavailable</p>
       );
     }
     return this.props.children;

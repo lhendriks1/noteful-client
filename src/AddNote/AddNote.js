@@ -16,7 +16,7 @@ export default class AddNote extends Component {
     };
   }
 
-static contextType = ApiContext;
+  static contextType = ApiContext;
 
   handleSubmit(event) {
     event.preventDefault();
@@ -36,22 +36,19 @@ static contextType = ApiContext;
     }
   }
 
-
   updateContent(noteContent) {
     this.setState({
       content: noteContent
-    })
-  };
+    });
+  }
 
   updateFolder(folder) {
-    console.log(folder);
     this.setState({
       folderId: folder
-    })
-  };
+    });
+  }
 
   addNote(newNote) {
-    console.log(newNote);
     fetch(`${config.API_ENDPOINT}/notes`, {
       method: 'POST',
       body: JSON.stringify(newNote),
@@ -144,8 +141,4 @@ static contextType = ApiContext;
       </form>
     );
   }
-}
-
-AddNote.propTypes = {
-
 }
