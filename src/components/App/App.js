@@ -7,10 +7,10 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
-import ErrorBoundary from '../ErrorBoundary';
-import ApiContext from '../ApiContext'
-import config from '../config';
-import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
+import ErrorBoundary from '../../ErrorBoundary';
+import ApiContext from '../../ApiContext'
+import config from '../../config';
+import {getNotesForFolder, findNote, findFolder} from '../../notes-helpers';
 import './App.css';
 
 class App extends Component {
@@ -53,10 +53,9 @@ class App extends Component {
       });
     };
 
-    handleAddFolder = folderName => {
-      console.log(folderName);
+    handleAddFolder = folder_title => {
       this.setState({
-        folders: [...this.state.folders, folderName]
+        folders: [...this.state.folders, folder_title]
       })
     }
 
@@ -70,7 +69,7 @@ class App extends Component {
     renderNavRoutes() {
         return (
             <>
-                {['/', '/folder/:folderId'].map(path => (
+                {['/', '/folder/:folder_id'].map(path => (
                     <Route
                         exact
                         key={path}
@@ -81,15 +80,19 @@ class App extends Component {
                           </ErrorBoundary> }
                     />
                 ))}
-                <Route path="/note/:noteId"
+                <Route path="/note/:note_id"
                   render={props =>
                     <ErrorBoundary>
-                      <NotePageNav {...props} />
+                      <NotePageNav {...props}/>
                     </ErrorBoundary>
                     }
                 />
                 <Route path="/add-folder"
-                    component={NoteListNav}
+                    render={props =>
+                    <ErrorBoundary>
+                      <NoteListNav {...props}/>
+                    </ErrorBoundary>
+                }
                 />
                 <Route path='/add-note'
                   component={NotePageNav}
@@ -100,43 +103,44 @@ class App extends Component {
 
     renderMainRoutes() {
         return (
-            <>
-                {['/', '/folder/:folderId'].map(path => (
-                    <Route
-                        exact
-                        key={path}
-                        path={path}
-                        render={props =>
-                          <ErrorBoundary>
-                            <NoteListMain {...props}/>
-                          </ErrorBoundary>}
-                    />
-                ))}
-                <Route
-                    path="/note/:noteId"
+              <>
+                  {["/", "/folder/:folder_id"].map(path => (
+                      <Route
+                          exact
+                          key={path}
+                          path={path}
+                          render={props =>
+                            <ErrorBoundary>
+                              <NoteListMain {...props}/>
+                            </ErrorBoundary>
+                          }
+                      />
+                  ))}
+                  <Route
+                      path="/note/:note_id"
+                      render={props =>
+                        <ErrorBoundary>
+                          <NotePageMain {...props}/>
+                        </ErrorBoundary>
+                      }
+                  />
+                  <Route
+                    path="/add-folder"
                     render={props =>
                       <ErrorBoundary>
-                        <NotePageMain {...props}/>
+                        <AddFolder {...props} />
                       </ErrorBoundary>
                     }
-                />
-                <Route
-                  path="/add-folder"
-                  render={(props) =>
-                    <ErrorBoundary>
-                      <AddFolder {...props} />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/add-note"
-                  render={props =>
-                    <ErrorBoundary>
-                      <AddNote {...props} />
-                    </ErrorBoundary>
-                  }
-                />
-            </>
+                  />
+                  <Route
+                    path="/add-note"
+                    render={props =>
+                      <ErrorBoundary>
+                        <AddNote {...props} />
+                      </ErrorBoundary>
+                    }
+                  />
+              </>
         );
     }
 

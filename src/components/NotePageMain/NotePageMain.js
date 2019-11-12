@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Note from '../Note/Note'
-import ApiContext from '../ApiContext'
-import { findNote } from '../notes-helpers'
+import ApiContext from '../../ApiContext'
+import { findNote } from '../../notes-helpers'
 import './NotePageMain.css'
 
 export default class NotePageMain extends Component {
@@ -12,24 +12,28 @@ export default class NotePageMain extends Component {
     }
   }
 
-  handleDeleteNote = noteId => {
+  handleDeleteNote = note_id => {
     this.props.history.push('/')
   }
 
   render() {
+    const { note_id } = this.props.match.params;
+    console.log(note_id)
     const { notes=[] } = this.context;
-    const { noteId } = this.props.match.params;
-    const note = findNote(notes, noteId) || {context: ''}
+    console.log(this.context)
+    console.log(notes)
+    const note = findNote(notes, note_id) || {context: ''}
+    console.log(note)
     return (
       <section className='NotePageMain'>
         <Note
           id={note.id}
-          name={note.name}
-          modified={note.modified}
+          note_title={note.note_title}
+          date_modified={note.date_modified}
           onDeleteNote={this.handleDeleteNote}
         />
         <div className='NotePageMain__content'>
-          {note.content.split(/\n \r|\n/).map((para, i) =>
+          {note.note_content.split(/\n \r|\n/).map((para, i) =>
             <p key={i}>{para}</p>
           )}
         </div>
@@ -37,3 +41,4 @@ export default class NotePageMain extends Component {
     )
   }
 }
+

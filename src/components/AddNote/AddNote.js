@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import ApiContext from '../ApiContext';
-import config from '../config';
-import '../Form.css';
+import ApiContext from '../../ApiContext';
+import config from '../../config';
+import '../../Form.css';
 
 export default class AddNote extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      content: '',
-      folderId: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
-      modified: new Date(),
+      note_title: '',
+      note_content: '',
+      folder_id: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
+      date_modified: new Date(),
       error: false,
     };
   }
@@ -26,25 +26,25 @@ export default class AddNote extends Component {
 
   updateName(noteName) {
     this.setState({
-      name: noteName
+      note_title: noteName
     })
   };
 
   validateNoteName() {
-    if(this.state.name.trim().length === 0) {
+    if(this.state.note_title.trim().length === 0) {
       return true;
     }
   }
 
   updateContent(noteContent) {
     this.setState({
-      content: noteContent
+      note_content: noteContent
     });
   }
 
   updateFolder(folder) {
     this.setState({
-      folderId: folder
+      folder_id: folder
     });
   }
 
@@ -67,9 +67,9 @@ export default class AddNote extends Component {
     })
     .then(()=> {
       this.setState({
-        noteName: '',
-        noteContent: '',
-        folderId: 'Important',
+        note_title: '',
+        note_content: '',
+        folder_id: 'Important',
         error: false
       });
       this.props.history.push('/')
@@ -98,7 +98,7 @@ export default class AddNote extends Component {
     const {folders=[]} = this.context;
     const folderOptions = folders.map(folder =>
       <option key={folder.id} value={folder.id}>
-        {folder.name}
+        {folder.folder_title}
       </option>);
 
     return (

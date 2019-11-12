@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ApiContext from '../ApiContext'
-import config from '../config'
+import ApiContext from '../../ApiContext'
+import config from '../../config'
 import './Note.css'
 
 export default class Note extends Component {
@@ -13,9 +13,7 @@ export default class Note extends Component {
 
   handleClickDelete = e => {
     e.preventDefault();
-    console.log('handleClickDelete called');
     const noteId = this.props.id
-    console.log(noteId);
 
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
       method: 'DELETE',
@@ -36,12 +34,12 @@ export default class Note extends Component {
   }
 
   render() {
-    const { name, id, modified } = this.props;
+    const { note_title, id, date_modified } = this.props;
     return (
       <div className='Note'>
         <h2 className='Note__title'>
           <Link to={`/note/${id}`}>
-            {name}
+            {note_title}
           </Link>
         </h2>
         <button className='Note__delete' type='button' onClick={e => this.handleClickDelete(e)}>
@@ -54,7 +52,7 @@ export default class Note extends Component {
             Modified
             {' '}
             <span className='Date'>
-              {format(modified, 'Do MMM YYYY')}
+              {format(date_modified, 'Do MMM YYYY')}
             </span>
           </div>
         </div>

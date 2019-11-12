@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ApiContext from '../ApiContext'
+import ApiContext from '../../ApiContext'
 import Note from '../Note/Note'
 import CircleButton from '../CircleButton/CircleButton'
-import { getNotesForFolder } from '../notes-helpers'
+import { getNotesForFolder } from '../../notes-helpers'
 import './NoteListMain.css'
 
 export default class NoteListMain extends Component {
@@ -16,18 +16,23 @@ export default class NoteListMain extends Component {
   }
 
   render() {
-    const { folderId } = this.props.match.params;
+    const { folder_id } = this.props.match.params;
     const { notes=[] } = this.context;
-    const notesForFolder = getNotesForFolder(notes, folderId);
+    console.log(notes)
+    const notesForFolder = getNotesForFolder(notes, folder_id);
+    console.log(notesForFolder)
+
     return (
       <section className='NoteListMain'>
         <ul>
           {notesForFolder.map(note =>
             <li key={note.id}>
               <Note
-                id={note.id}
-                name={note.name}
-                modified={note.modified}
+                id ={note.id}
+                note_title={note.note_title}
+                date_modified={note.date_modified}
+                note_content={note.note_content}
+                folder_id={folder_id}
               />
             </li>
           )}

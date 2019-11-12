@@ -1,42 +1,40 @@
 import React, { Component } from 'react';
-import config from '../config';
-import ApiContext from '../ApiContext';
-import '../Form.css';
+import config from '../../config';
+import ApiContext from '../../ApiContext';
+import '../../Form.css';
 
 export default class AddFolder extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      folderName: '',
+      folder_title: '',
       error: false,
-    };
+    }
   }
 
   static contextType = ApiContext;
 
   handleSubmit(event) {
     event.preventDefault();
-    const { folderName } = this.state;
-    this.addFolder(folderName);
+    const { folder_title } = this.state;
+    this.addFolder(folder_title);
   }
 
-  updateFolderName(folderName) {
-    this.setState({folderName: folderName})
+  updateFolderName(folder_title) {
+    this.setState({folder_title: folder_title})
 
   }
 
   validateFolderName() {
-    const {folderName} = this.state;
-    console.log(folderName);
-    if(folderName.length === 0)
+    const {folder_title} = this.state;
+    if(folder_title.length === 0)
     return 'Folder name is required';
   }
 
-  addFolder(folderName) {
-    console.log(folderName);
+  addFolder(folder_title) {
     fetch(`${config.API_ENDPOINT}/folders`, {
       method: 'POST',
-      body: JSON.stringify({'name': folderName}),
+      body: JSON.stringify({'folder_title': folder_title}),
       headers: {
         'content-type': 'application/json',
       }
@@ -47,16 +45,15 @@ export default class AddFolder extends Component{
         return res.json()
       })
       .then((resJson) => {
-        let newFolder = {'id':resJson.id, 'name':folderName};
-        console.log(newFolder);
+        let newFolder = {'id': resJson.id, 'folder_title': folder_title};
         this.context.addFolder(newFolder)
       })
       .then(() => {
         this.setState({
-          folderName: {
+          folder_title: {
             value: ''},
           error: false,
-          })
+        })
         this.props.history.push('/')
       })
       .catch(e => {
